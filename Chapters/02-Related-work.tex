@@ -1,0 +1,66 @@
+\chapter{Related work}
+
+\label{Related work}
+
+\section{Deep learning approaches for point cloud}
+The different number of points and high dimensionality of the point cloud input makes it challenging to use regular 2D convolutions. The typical approach for such an issue is the conversation of the point cloud to a different format. Such approaches are projection-based methods, volumetric-based methods, and other geometric based methods.
+
+\subsection{Projection-based methods} take point cloud and project it into a different panel view. After the projection, each view provides a set of combined features for target classification, regression, or segmentation. The critical challenge for the projection-based algorithm is the multi-view feature aggregation into one global feature space.
+MVCNN \cite{su_multi-view_2015} is the first model that presents a standard CNN architecture trained to recognize the shapes' rendered views independently of each other and show that a 3D shape can be recognized even from a single view at an appropriate accuracy. Recognition rates further increase when multiple views of the shapes are provided.
+MHBN \cite{yu_multi-view_2018} (Multi-view Harmonized Bilinear Network) is the continuation of MVCNN. The approach proposes to integrates local convolutional features by harmonized bilinear pooling to produce a compact global descriptor.
+To persist the information from different views, the View-GCN \cite{wei_view-gcn_2020} proposes constructing view-graph with multiple views as graph nodes, then designing a graph convolutional neural network over view-graph to learn discriminative shape descriptor hierarchically.
+All projection-based methods struggle from high memory consumption and high computational complexity since, for one feature extraction, the model should be run for the number of different views.
+
+\subsection{Volumetric-based methods} map the point cloud into a 3D grid. Then conventional 3D convolutions are using for feature extraction.
+VoxNet \cite{maturana_voxnet_2015} is the first method that exploits the volumetric representation of the point cloud. In this work, each cloud point is mapped to a discrete voxel point. The size of the target grid is 32 x 32 x 32 voxels. After the mapping, three convolutional layers are using to produce the target feature representations.
+The more advanced volumetric-based models use octrees data structure. OctNet \cite{riegler_octnet_2017} propose to represent the point cloud as several octrees along a regular grid, each octree is encoded as a bit string, and features are generated through naive arithmetic. This approach reduces the memory consumption of the model during the training and inference stages.
+The next iteration of octrees representation of point cloud is proposed in O-CNN \cite{wang_o-cnn_2017}. The model uses 3D convolutions to extract features from octrees. Built upon the octree representation of 3D shapes, the method takes the average normal vectors of a 3D model sampled in the finest leaf octants as input and performs 3D CNN operations on the octants occupied by the 3D shape surface.
+
+\section{Point-based Methods}
+Compared with projection-based methods and volumetric-based methods that aggregate points from a spatial neighborhood, point-based methods attempt to learn features from individual points. Most of the recent work focuses on this direction.
+
+The first work which use point-based approach is PointNet \cite{qi_pointnet_2017}. PointNet learns pointwise features independently with several MLP layers and extracts global features with a max-pooling layer. The input (an $n \times 3$ 2D tensor) is first multiplied by an affine transformation matrix predicted by a mini-network (T-Net) to hold invariance under geometric transformations. The point set is then passed through a group of MLPs followed by another joint alignment network, and a max-pooling layer to obtain the final global feature.
+
+The second iteration of PointNet is PointNet++ \cite{qi_pointnet_2017-1}. PointNet++ introduce a hierarchical neural network that applies PointNet recursively on a nested partitioning of the input point set. By exploiting metric space distances, network is able to learn local features with increasing contextual scales.
+
+The state of the art model for point-based classification is Point Attention Transformers \cite{yang_modeling_2019}. The research for the first time propose an end-to-end learnable and taskagnostic sampling operation, named Gumbel Subset Sampling (GSS), to select a representative subset of input points. Equipped with Gumbel-Softmax, it produces a ”soft” continuous subset in training phase, and a ”hard” discrete subset in test phase. By selecting representative subsets in a hierarchical fashion, the networks learn a stronger representation of the input sets with lower computation cost.
+
+\section{Human pose estimation}
+The latest research approaches in the field of human pose estimation are based on deep learning.
+There are two main approaches to the task:
+\begin{itemize}
+  \item pose estimation based on 2D images (mostly RGB);
+  \item pose estimation based on the 3D point cloud.
+\end{itemize}
+
+The latter approach is more recent and promising. The 3D perspective gives more information for the models about body position in the space. Also, 3D point clouds mitigate the issue with occluded parts of the body. 2D image is a 2D projection of 3D space, and this transformation leads to the loss of information.
+
+\subsection{Image-based methods}
+The approaches for 2D image human pose estimation are devided into two types:
+\begin{itemize}
+  \item top-down approach
+  \item bottom-up approach
+\end{itemize}
+In the top-down approach the first step is person detection and then pose regression. In bottom-up approach all body parts are detected first, and then grouped according to body's position.
+
+OpenPose \cite{cao_openpose_2019} is the most popular example of bottom-up approaches for multi-person pose estimation. The network first extracts features from the image using VGG feature extractor. Then features are passed to two separate branches, first branch predicts body parts key points, second branch predict the associativity between body parts.
+
+RMPE (AlphaPose) \cite{fang_rmpe_2018} is a top-down model. This approach propose to use Symmetric Spatial Transformer Network (SSTN) to extract person regions based on bounding boxes. A Single Person Pose Estimator (SPPE) is used in this extracted region to estimate the human pose skeleton for that person. A Spatial De-Transformer Network (SDTN) is used to remap the estimated human pose back to the original image coordinate system. Finally, a parametric pose Non-Maximum Suppression (NMS) technique is used to handle the issue of redundant pose deductions.
+
+\subsection{point-cloud-based methods}. Point cloud based estimation is relatively young field due to recent growth of popularity of point cloud scanning devices.
+
+The first model for human pose estimation based on point cloud is \cite{diaz_barros_real-time_2015}. The paper presents an approach where based on predefined human body skeleton the input point cloud is clustered using PCA and Expectation maximization algorithms.
+
+The recent work in this field is presented in \cite{zhou_learning_2020}. Paper propose a deep human pose network for 3D pose estimation by taking the point cloud data as input data to model the surface of complex human structures. This approach is end to end, first cast the 3D human pose estimation from 2D depth images to 3D point clouds and directly predict the 3D joint position.
+
+More point cloud human pose estimation methods will be covered in the next subsection. Next subsection covers models which are based on capsule architecture.
+
+\section{Capsule network}
+The concept of the capsule was first proposed by Hinton \cite{sabour_dynamic_2017} and has been widely used in 2D and 3D deep learning \cite{kakillioglu_3d_2020, qin_detecting_2020, duarte_videocapsulenet_2018, lalonde_capsules_2018}.
+
+Capsules represents as a set of vectors. The length of the capsule's vector represents the probability of the object's presence. Direction of the vector describes object's property e.g. position, viewpoint, size, shape, etc. For capsules' training Hinton propose a new algorithm \cite{sabour_dynamic_2017} called dynamic routing. The forward pass with dynamic routing propagate the input data from lower level capsules to higher level ones. Lower level capsules pass learned and predicted data to the higher level capsules. If multiple lower-level capsules agrees (activated) then higher-level capsules activates accordingly. With each iteration of dynamic routing each capsules gets more accurate.
+
+\subsection{Capsule networks for point cloud classification}. The first work where capsule networks were applied to the problem of point cloud classification is 3DCapsNet \cite{cheraghian_3dcapsule_2018}. In this work a new capsule-based layer is proposed - ComposeCaps. ComposeCaps learns spatially relevant feature mapping that can be exploited for 3D point cloud classification.
+The second iteration of capsule applicability to 3D classification is 3D point capsule network \cite{zhao_3d_2019}. 3D point capsule network is an auto-encoder designed based on capsule networks. In this work researchers propose new architecture with capsule network encoder which encode input point cloud to capsules' latent space, and decoder which decode latent capsules. The proposed architecture works for several common point cloud-related tasks, such as object classification, object reconstruction and part segmentation.
+
+\subsection{Capsule networks for point cloud regression.} The only work which is currently presented on the topic of point cloud regression is Capsule-HandsNet \cite{wu_3d_2020}. This project is inspired by this research. Capsule-HandsNet proposes an end-to-end capsule-based hand pose estimation network, which processes hand point clouds directly with the consideration of structural relationships among local parts, including symmetry, junction, relative location, etc.The model works in autoencoder maner the same as in \cite{zhao_3d_2019}.
