@@ -2,16 +2,43 @@
 
 \label{Conclusions}
 
-% from hinton's paper
-Now that convolutional neural networks have become the dominant approach to object recognition, it
-makes sense to ask whether there are any exponential inefficiencies that may lead to their demise. A
-good candidate is the difficulty that convolutional nets have in generalizing to novel viewpoints. The
-ability to deal with translation is built in, but for the other dimensions of an affine transformation
-we have to chose between replicating feature detectors on a grid that grows exponentially with the
-number of dimensions, or increasing the size of the labelled training set in a similarly exponential way.
-Capsules (Hinton et al. [2011]) avoid these exponential inefficiencies by converting pixel intensities
-8
-into vectors of instantiation parameters of recognized fragments and then applying transformation
-matrices to the fragments to predict the instantiation parameters of larger fragments. Transformation
-matrices that learn to encode the intrinsic spatial relationship between a part and a whole constitute
-viewpoint invariant knowledge that automatically generalizes to novel viewpoints. 
+\section{What was done?}
+In this section we sum up our work which was concentrated on main objectives:
+\begin{itemize}
+  \item Design a capsule-based model for the task of human pose estimation using point cloud data. Compare model's performance with SOTA models
+  \item Verify the hypothesis that capsule-based models perform better compared to others on noisy data
+  \item Verify the hypothesis that capsule-based models better generalize and need less training data compared to other models
+\end{itemize}
+
+Further in the text, we describe our results for each objection.
+
+\subsubsection{Capsule-based model for human pose estimation}
+We designed a capsule-based neural network for human pose estimation using point clouds. We took the work \cite{wu_3d_2020} of as a baseline architecture for our problem. We proposed the new method of one-stage training of the model which showed improved performance both in training speed and in the model's accuracy. We compared our model with SOTA models on the well-known dataset. Our proposed network shows competitive results outperforming such architectures as use as a reference such models: RF \parencite{shotton_real-time_2011}, RTW \parencite{ho_yub_jung_random_2015}, IEF \parencite{carreira_human_2016}, and VI \parencite{haque_towards_2016}. But still our proposed model underperform in comparison with  REN \parencite{chen_pose_2020} and Pose-net \parencite{moon_v2v-posenet_2018} models.
+
+\subsubsection{Capsule-based model and noisy data}
+We designed a methodology and conducted experiments to verify the hypothesis that capsule-based networks are more noise agnostic in comparison with non-capsule-based models.
+
+We have evaluated our proposed models and the SOTA PoseNet model on the ITOP dataset with different amounts of artificial noise (from Gaussian and uniform distributions). Based on our experiments capsule-based model shows better results in most of the cases in comparison with PoseNet. Also, we have visually proved that a capsule-based model could denoise the point cloud which we associate with the ability of the capsule network to hold internal representation.
+
+\subsubsection{Capsule-based model and train dataset size}
+We designed a methodology and conducted experiments to verify the hypothesis that capsule-based networks need fewer data to train in comparison with non-capsule-based models.
+
+We have evaluated the capsule-based model and SOTA PoseNet model on the ITOP dataset. We have conducted multiple experiments where we reduce the training dataset size. Based on our results we don't see any proofs that capsule-based models could better generalize the data and thus need less training data.
+
+\section{Future work}
+Algorithms on point clouds are a really promising field. Capsule-based networks are interesting models for this particular task. Capsule-based models could hold an internal representation of the input data and thus reuse it to improve performance for a variety of tasks like classification, segmentation, regression, etc.
+
+We have shown that capsule-based models are applicable for the task of human pose estimation, and could show compatible results.
+
+As future work we see such areas:
+
+\subsubsection{Data preprocessing}
+We proposed a method where we preprocess the initial point cloud and extract a person point cloud, and only then use it as an input to the network. Such an approach is not applicable to the real-world data since our techniques are greatly tight to the ITOP dataset.
+
+To better adapt a pipeline to the real-world use case the special extraction DNN models could be used \parencite{shi_points_2020,yang_pixor_2019}. Such models don't need handcrafted thresholds and parameters thus could be used for more diverse datasets.
+
+\subsubsection{New datasets}
+Our research was focused on the ITOP dataset. But the EVAL dataset mentioned in Section-\ref{Dataset} also could be used for the evaluation. 
+
+\subsubsection{New loss aggregation strategies}
+In our work, we use the product of losses as an aggregation strategy. Also, we use the logarithm to mitigate the issue of vanishing gradient. This approach is quite primitive and some advanced loss aggregations methods could be used \parencite{noauthor_optimizing_nodate}.

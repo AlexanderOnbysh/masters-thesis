@@ -11,6 +11,8 @@
 \usepackage[utf8]{inputenc} % Required for inputting international characters
 \usepackage[T1]{fontenc} % Output font encoding for international characters
 \usepackage{mathpazo} % Use the Palatino font by default
+\usepackage{hyperref}
+\usepackage{float}
 
 \usepackage[backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
@@ -126,16 +128,6 @@
 \cleardoublepage
 
 %----------------------------------------------------------------------------------------
-%	QUOTATION PAGE
-%----------------------------------------------------------------------------------------
-
-\vspace*{0.2\textheight}
-
-\noindent\enquote{\itshape Thanks to my solid academic training, today I can write hundreds of words on virtually any topic without possessing a shred of information, which is how I got a good job in journalism.}\bigbreak
-
-\hfill Dave Barry
-
-%----------------------------------------------------------------------------------------
 %	ABSTRACT PAGE
 %----------------------------------------------------------------------------------------
 
@@ -146,14 +138,6 @@ Human pose estimation based on points cloud is an emerging field that develops w
 The project's objective is to experimentally assess the applicability of capsule neural network architecture to the task of point cloud human pose estimation and measure performance on non-synthetic data. Additionally, measure noise sustainability of capsule networks for 3D data compared to regular models. Compare models' performance with restricted amount of training data.
 \end{abstract}
 
-%----------------------------------------------------------------------------------------
-%	ACKNOWLEDGEMENTS
-%----------------------------------------------------------------------------------------
-
-\begin{acknowledgements}
-\addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
-The acknowledgments and the people to thank go here, don't forget to include your project advisor\ldots
-\end{acknowledgements}
 
 %----------------------------------------------------------------------------------------
 %	LIST OF CONTENTS/FIGURES/TABLES PAGES
@@ -170,6 +154,10 @@ The acknowledgments and the people to thank go here, don't forget to include you
 \begin{abbreviations}{ll} % Include a list of abbreviations (a table of two columns)
 
 \textbf{CapsNet} & Capsule network \\
+\textbf{AP} & Average precision \\
+\textbf{mAP} & Mean average precision \\
+\textbf{ITOP} & Invariant Top View dataset \\
+\textbf{SOTA} & State Of The Art \\
 
 
 \end{abbreviations}
@@ -184,6 +172,7 @@ The acknowledgments and the people to thank go here, don't forget to include you
 $P$ & set of points in $D$ space (point cloud) \\
 $J$ & set of key joints positions \\
 $N$ & resolution of point cloud (number of points in one cloud) \\
+$d_{CD}$ & Chamfer distance \\
 
 
 % \addlinespace % Gap to separate the Roman symbols from the Greek
@@ -203,8 +192,8 @@ $N$ & resolution of point cloud (number of points in one cloud) \\
 \include{Chapters/01-Introduction}
 \include{Chapters/02-Related-work} 
 \include{Chapters/03-research-hypothesis-and-problem}
+\include{Chapters/05-Dataset-and-evaluation}
 \include{Chapters/04-Methodology} 
-\include{Chapters/05-Dataset-and-evaluation} 
 \include{Chapters/06-Experiments} 
 \include{Chapters/07-Conclusions} 
 

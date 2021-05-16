@@ -1,26 +1,28 @@
 \chapter{Dataset and evaluation metrics}
 \label{Dataset}
 
-In the first section (\ref{dataset}) we describe the dataset which is used for training and evaluation purpose for the task of the human pose estimation.
-In the second (\ref{evaluation-metric}) section the define the evaluation metric for aforementioned
+In the Section~\ref{dataset} we describe the dataset which is used for training and evaluation purpose for our task of the human pose estimation.
+In Section~\ref{evaluation-metric} we define the evaluation metric for the aforementioned task.
 
 \section{Dataset}
-The most common datasets for the task of human pose estimation from point clouds are ITOP \parencite{haque_towards_2016} and EVAL \parencite{liu_point_2020}. In this work we concentrate on ITOP dataset since it's more widely used thus has more related works for results' comparison.
-
 \label{dataset}
+
+The most common datasets for the task of human pose estimation from point clouds are ITOP \parencite{haque_towards_2016} and EVAL \parencite{liu_point_2020}. In this work we concentrate on ITOP dataset since it's more widely used \parencite{shotton_real-time_2011,ho_yub_jung_random_2015,carreira_human_2016,chen_pose_2020,moon_v2v-posenet_2018} thus has more related works for results' comparison.
+
 \subsection{ITOP}
+ITOP dataset was first released in the work of \cite{haque_towards_2016}. The dataset comprises depth images of people in different poses. An example of the depth map from the dataset is shown in Figure~\ref{img:dataset-points-with-depth}. 
 
-ITOP dataset was first released in the work of \cite{haque_towards_2016}. The dataset comprises depth images of people in different poses. In Figure~\ref{img:dataset-points-with-depth} are shown example of the depth map from the dataset. 
+The snapshots of poses are taken from two different viewpoints: the side view, and the top view. In side view, the camera faces a person directly in front (the whole body is seen). In the top view, the camera is placed above the person's head and shots the view from the top (torso usually occluded by shoulders and arms).
 
-The snapshots of poses are taken from two different viewpoints: the front view, and the top view. In front view the camera faces a person directly in front (the whole body is seen). In top view the camera is placed above the person and shots the view from the top (torso usually occluded by shoulders and arms).
+The dataset is collected inside of the room thus some furniture items appear in the dataset. Due to excess obstacles in the field of view of the camera, we apply preprocessing pipelines to extract only human point clouds. The pipeline is described in Section~\ref{Data-preparation}. Figures \ref{img:dataset-human-examples-front-view} and \ref{img:dataset-human-examples-top-view} show examples of side and top views respectively.
 
-The dataset is collected inside of the room thus some furniture items appear in the dataset. Due to excess obstacles in the field of view of the camera, we apply preprocessing pipelines to extract only human point cloud. The pipeline is described in Section~\ref{Data-preparation}. Figures \ref{img:dataset-human-examples-front-view} and \ref{img:dataset-human-examples-top-view} show examples of font and top view respectively.
+The 3-dimensional $(x,y,z)$ coordinates are relative to sensor's position. The distance is measured in meters. Thus, if $x$ coordinate hasa  value of $2$, it means that the point is 2 meters right relatively to the sensor's $(0, 0, 0)$ reference point.
 
-Ground truths consist of 15 joint key points - head, neck, shoulders, elbows, hands, torso, hips, knees, and foots. An example of named joints is shown in Figure~\ref{img:dataset-example-joints}. Table~\ref{tab:dataset-statistic} covers general statistics on dataset size.
+Ground truths consist of  15 joint key point coordinates - head, neck, shoulders, elbows, hands, torso, hips, knees, and feet. An example of named joints is shown in Figure~\ref{img:dataset-example-joints}. Table~\ref{tab:dataset-statistics} covers general statistics on dataset size.
 
 \begin{table}
-    \label{tab:dataset-statistics}
     \caption{General statistic for ITOP dataset}
+    \label{tab:dataset-statistics}
     \centering
     \begin{tabular}{l l l l}
     \toprule
@@ -60,11 +62,11 @@ Ground truths consist of 15 joint key points - head, neck, shoulders, elbows, ha
 
 \section{Evaluation metric}
 \label{evaluation-metric}
-Since we are working on the task of the regression, we use mean Average Precision (mAP) as our main metric of model's performance. The ground truths are coordinates of key human joints (denoted as $J$). The output of the regression model is also joints' coordinates of the same size as $J$ (denoted as $\hat{J}$).
+Since we are working on the regression task, we use mean Average Precision (mAP) as our main metric of the model's performance. The ground truths are coordinates of key human joints (denoted as $J$). The output of the regression model is also joints' coordinates of the same size as $J$ (denoted as $\hat{J}$).
 
-To be able to compare our results with other works \parencite{haque_towards_2016,moon_v2v-posenet_2018,guo_towards_2017} we use the same approach of calculation of $AP$ using $10 \ cm$ distance threshold. By this rule (Formula~\ref{eqn:dataset-metric-ap}) the predicted joint is considered correctly detected if the $L_2$ distance to ground truth is equal or less that $10 \ cm$. The resulting $mAP$ is calculated by averaging $AP$ by the number of samples (Formula~\ref{eqn:dataset-metric-map}).
+To be able to compare our results with the work of others \parencite{haque_towards_2016,moon_v2v-posenet_2018,guo_towards_2017} we use the same approach of calculation of $AP$ using $10 \ cm$ distance threshold. By this rule (Formula~\ref{eqn:dataset-metric-ap}) the predicted joint is considered correctly detected if the $L_2$ distance to ground truth is equal or less that $10 \ cm$. The resulting $mAP$ is calculated by averaging $AP$ by the number of samples (Formula~\ref{eqn:dataset-metric-map}).
 
-For further convenience we will also apply the plot with $mAP$ values for distances from $0 \ cm$ to $100 \ cm$ (Example in Figure~\ref{img:example-map}).
+For further convenience, we will also apply the plot with $mAP$ values for distances from $0 \ cm$ to $100 \ cm$ (Example in Figure~\ref{img:example-map}).
 
 \begin{equation}
 \label{eqn:dataset-metric-ap}
