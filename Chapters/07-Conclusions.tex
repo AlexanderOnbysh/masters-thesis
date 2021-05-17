@@ -1,0 +1,17 @@
+\chapter{Conclusions}
+
+\label{Conclusions}
+
+% from hinton's paper
+Now that convolutional neural networks have become the dominant approach to object recognition, it
+makes sense to ask whether there are any exponential inefficiencies that may lead to their demise. A
+good candidate is the difficulty that convolutional nets have in generalizing to novel viewpoints. The
+ability to deal with translation is built in, but for the other dimensions of an affine transformation
+we have to chose between replicating feature detectors on a grid that grows exponentially with the
+number of dimensions, or increasing the size of the labelled training set in a similarly exponential way.
+Capsules (Hinton et al. [2011]) avoid these exponential inefficiencies by converting pixel intensities
+8
+into vectors of instantiation parameters of recognized fragments and then applying transformation
+matrices to the fragments to predict the instantiation parameters of larger fragments. Transformation
+matrices that learn to encode the intrinsic spatial relationship between a part and a whole constitute
+viewpoint invariant knowledge that automatically generalizes to novel viewpoints. 
