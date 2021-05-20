@@ -1,9 +1,76 @@
 \chapter{Experiments}
 \label{Experiments}
 
-\section{Capsule network}
-\section{Different normalization methods}
-\section{Noise}
+% -------------------------- ONE STAGE TRAIN -------------------------
+\section{Effectiveness of one stage training}
+\begin{table}
+    \label{tab:treatments}
+    \caption{The effects of treatments X and Y on the four groups studied.}
+    \centering
+    \begin{tabular}{l l l l}
+    \toprule
+    \tabhead{Dataset} & \tabhead{Two stage training} & \tabhead{One state training (our method)} & \tabhead{Difference} \\
+    \midrule
+    1 & 0.2  & 0.8  & 0 \\
+    2 & 0.17 & 0.7  & 0 \\
+    3 & 0.24 & 0.75 & 0 \\
+    4 & 0.68 & 0.3  & 0 \\
+    \bottomrule\\
+    \end{tabular}
+\end{table}
+
+% -------------------------- ITOP DATASET -------------------------
+\section{Results on ITOP dataset}
+\begin{table}
+    \caption{The effects of treatments X and Y on the four groups studied.}
+    \centering
+    \begin{tabular}{l|ccccccc}
+    \hline & \multicolumn{6}{|c} { mAP (front-view) } \\
+    \hline Body part & RF & RTW & IEF & VI & REN-9x6x6 & PoseNet & Our model \\
+    \hline Head & $63.8$ & $97.8$ & $96.2$ & $98.1$ & $\mathbf{98.7}$ & $98.29$ \\
+    Neck & $86.4$ & $95.8$ & $85.2$ & $97.5$ & $\mathbf{99.4}$ & $99.07$ \\
+    Shoulders & $83.3$ & $94.1$ & $77.2$ & $96.5$ & $96.1$ & $\mathbf{97.18}$ \\
+    Elbows & $73.2$ & $77.9$ & $45.4$ & $73.3$ & $74.7$ & $\mathbf{80.42}$ \\
+    Hands & $51.3$ & $\mathbf{70.5}$ & $30.9$ & $68.7$ & $55.2$ & $67.26$ \\
+    Torso & $65.0$ & $93.8$ & $84.7$ & $85.6$ & $98.7$ & $\mathbf{98.73}$ \\
+    Hip & $50.8$ & $80.3$ & $83.5$ & $72.0$ & $91.8$ & $\mathbf{93.23}$ \\
+    Knees & $65.7$ & $68.8$ & $81.8$ & $69.0$ & $89.0$ & $\mathbf{91.80}$ \\
+    Feet & $61.3$ & $68.4$ & $80.9$ & $60.8$ & $81.1$ & $\mathbf{87.6}$ \\
+    \hline Mean & $65.8$ & $80.5$ & $71.0$ & $77.4$ & $84.9$ & $\mathbf{88.74}$ \\
+    \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}
+    \caption{The effects of treatments X and Y on the four groups studied.}
+    \centering
+    \begin{tabular}{l|ccccccc}
+    \hline & \multicolumn{6}{|c} { mAP (top-view) } \\
+    \hline Body part & RF & RTW & IEF & VI & REN-9x6x6 & PoseNet & Our model \\
+    \hline Head & $95.4$ & $\mathbf{9 8 . 4}$ & $83.8$ & $98.1$ & $98.2$ & $\mathbf{9 8 . 4}$ \\
+     Neck & $98.5$ & $82.2$ & $50.0$ & $97.6$ & $98.9$ & $\mathbf{9 8 . 9 1}$ \\
+     Shoulders & $89.0$ & $91.8$ & $67.3$ & $96.1$ & $96.6$ & $\mathbf{9 6 . 8 7}$ \\
+     Elbows & $57.4$ & $80.1$ & $40.2$ & $\mathbf{8 6 . 2}$ & $74.4$ & $79.16$ \\
+     Hands & $49.1$ & $76.9$ & $39.0$ & $\mathbf{8 5 . 5}$ & $50.7$ & $62.44$ \\
+     Torso & $80.5$ & $68.2$ & $30.5$ & $72.9$ & $\mathbf{9 8 . 1}$ & $97.78$ \\
+     Hip & $20.0$ & $55.7$ & $38.9$ & $61.2$ & $85.5$ & $\mathbf{8 6 . 9 1}$ \\
+     Knees & $2.6$ & $53.9$ & $54.0$ & $51.6$ & $70.0$ & $\mathbf{8 3 . 2 8}$ \\
+     Feet & $0.0$ & $28.7$ & $62.4$ & $51.5$ & $41.6$ & $\mathbf{6 9 . 6 2}$ \\
+    \hline Mean & $47.4$ & $68.2$ & $51.2$ & $75.5$ & $75.5$ & $\mathbf{8 3 . 4 4}$ \\
+    \hline
+    \end{tabular}
+\end{table}
+
+
+% -------------------------- NOISE IN DATA -------------------------
+
+\section{How noise affects models' performance}
 \label{s:experiment-noise}
-\section{Dataset size}
-\section{Two stage training}
+
+
+
+\section{Models' convergence with the lack of data}
+
+
+
+

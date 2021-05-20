@@ -1,4 +1,47 @@
 
+@article{liu_point_2020,
+	title = {Point {Cloud} {Quality} {Assessment}: {Large}-scale {Dataset} {Construction} and {Learning}-based {No}-{Reference} {Approach}},
+	shorttitle = {Point {Cloud} {Quality} {Assessment}},
+	url = {http://arxiv.org/abs/2012.11895},
+	abstract = {Full-reference (FR) point cloud quality assessment (PCQA) has achieved impressive progress in recent years. However, in many cases, obtaining the reference point cloud is difficult, so the no-reference (NR) methods have become a research hotspot. Since learning-based FR-PCQA methods should be driven by data, few researches about NR objective quality metrics are conducted due to lack of large-scale subjective point cloud dataset. The shortage of point cloud data restricts the development of NR-PCQA techniques. Besides, the distinctive property of point cloud format makes infeasible applying blind image quality assessment (IQA) methods directly to predict the quality scores of point clouds. In this paper, we establish a large-scale PCQA dataset, which includes 104 reference point clouds and more than 24,000 distorted point clouds. In the established dataset, each reference point cloud is augmented with 34 types of impairments (e.g., Gaussian noise, contrast distortion, geometry noise, local loss, and compression loss) at 7 different distortion levels. Besides, inspired by the hierarchical perception system and considering the intrinsic attribute of point clouds, an end-to-end sparse convolutional neural network (CNN) is designed to accurately estimate the subjective quality. We conduct experiments on the new dataset to evaluate the performance of the proposed network. The results demonstrate that the proposed network has reliable performance. The dataset presented in this work will be publicly accessible at http://smt.sjtu.edu.cn.},
+	urldate = {2021-05-20},
+	journal = {arXiv:2012.11895 [eess]},
+	author = {Liu, Yipeng and Yang, Qi and Xu, Yiling and Yang, Le},
+	month = dec,
+	year = {2020},
+	note = {arXiv: 2012.11895},
+	keywords = {Electrical Engineering and Systems Science - Image and Video Processing},
+}
+
+@article{guo_towards_2017,
+	title = {Towards {Good} {Practices} for {Deep} {3D} {Hand} {Pose} {Estimation}},
+	url = {http://arxiv.org/abs/1707.07248},
+	abstract = {3D hand pose estimation from single depth image is an important and challenging problem for human-computer interaction. Recently deep convolutional networks (ConvNet) with sophisticated design have been employed to address it, but the improvement over traditional random forest based methods is not so apparent. To exploit the good practice and promote the performance for hand pose estimation, we propose a tree-structured Region Ensemble Network (REN) for directly 3D coordinate regression. It first partitions the last convolution outputs of ConvNet into several grid regions. The results from separate fully-connected (FC) regressors on each regions are then integrated by another FC layer to perform the estimation. By exploitation of several training strategies including data augmentation and smooth \$L\_1\$ loss, proposed REN can significantly improve the performance of ConvNet to localize hand joints. The experimental results demonstrate that our approach achieves the best performance among state-of-the-art algorithms on three public hand pose datasets. We also experiment our methods on fingertip detection and human pose datasets and obtain state-of-the-art accuracy.},
+	urldate = {2021-05-19},
+	journal = {arXiv:1707.07248 [cs]},
+	author = {Guo, Hengkai and Wang, Guijin and Chen, Xinghao and Zhang, Cairong},
+	month = jul,
+	year = {2017},
+	note = {arXiv: 1707.07248
+version: 1},
+	keywords = {Computer Science - Computer Vision and Pattern Recognition},
+}
+
+@article{moon_v2v-posenet_2018,
+	title = {{V2V}-{PoseNet}: {Voxel}-to-{Voxel} {Prediction} {Network} for {Accurate} {3D} {Hand} and {Human} {Pose} {Estimation} from a {Single} {Depth} {Map}},
+	shorttitle = {{V2V}-{PoseNet}},
+	url = {http://arxiv.org/abs/1711.07399},
+	abstract = {Most of the existing deep learning-based methods for 3D hand and human pose estimation from a single depth map are based on a common framework that takes a 2D depth map and directly regresses the 3D coordinates of keypoints, such as hand or human body joints, via 2D convolutional neural networks (CNNs). The first weakness of this approach is the presence of perspective distortion in the 2D depth map. While the depth map is intrinsically 3D data, many previous methods treat depth maps as 2D images that can distort the shape of the actual object through projection from 3D to 2D space. This compels the network to perform perspective distortion-invariant estimation. The second weakness of the conventional approach is that directly regressing 3D coordinates from a 2D image is a highly non-linear mapping, which causes difficulty in the learning procedure. To overcome these weaknesses, we firstly cast the 3D hand and human pose estimation problem from a single depth map into a voxel-to-voxel prediction that uses a 3D voxelized grid and estimates the per-voxel likelihood for each keypoint. We design our model as a 3D CNN that provides accurate estimates while running in real-time. Our system outperforms previous methods in almost all publicly available 3D hand and human pose estimation datasets and placed first in the HANDS 2017 frame-based 3D hand pose estimation challenge. The code is available in https://github.com/mks0601/V2V-PoseNet\_RELEASE.},
+	urldate = {2021-05-19},
+	journal = {arXiv:1711.07399 [cs]},
+	author = {Moon, Gyeongsik and Chang, Ju Yong and Lee, Kyoung Mu},
+	month = aug,
+	year = {2018},
+	note = {arXiv: 1711.07399
+version: 3},
+	keywords = {Computer Science - Computer Vision and Pattern Recognition},
+}
+
 @misc{noauthor_pcl_nodate,
 	title = {{PCL} - {Euclidean} {Cluster} {Extraction}},
 	url = {https://pcl.readthedocs.io/en/latest/cluster_extraction.html},

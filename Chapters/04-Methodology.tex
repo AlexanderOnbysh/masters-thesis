@@ -6,7 +6,7 @@ The chapter consists of two main section. In \ref{Data preparation} section we w
 
 
 \section{Data preparation}
-\label{Data preparation}
+\label{Data-preparation}
 In this section we will cover main preprocessing steps for datasets. Preprocessing consists of:
 \begin{enumerate}
   \item human extraction;
@@ -18,14 +18,26 @@ In this section we will cover main preprocessing steps for datasets. Preprocessi
   \item adding noise to data (optional).
 \end{enumerate}
 
-On the first step we remove the most obvious points which doesn't represent human posture. On the second step we perform segmentation to extract "human" cluster. The third step is optional, and is used in experiments with performance of different models with various levels of the noise.
+On the first step we remove the most obvious points which doesn't represent human posture. On the second step we perform segmentation to extract "human" cluster. The third step is optional, and is used in experiments with performance of different models with various levels of the noise.  
 
+On Figure~\ref{img:example-of-all-parts} are shown all steps of the preprocessing pipelines: threshold filtering, clusterization, and segmentation.
+
+\begin{figure}[htbp]
+    % \centerline{
+    \hspace*{-1cm}                                                           
+        \includegraphics[trim=0 200 450 200,clip,scale=0.25]{Figures/example-all-parts.png}
+    % }
+    \caption{Example of preprocessing stages. \textbf{Blue} - points filtered by threshold. \textbf{Red} - points removed by human segmentation. \textbf{Green} - extracted human point cloud. \textbf{Purple} - key human joints}
+    \label{img:example-of-all-parts}
+\end{figure}
 
 \subsection{Human extraction}
 To start working with points cloud for human pose estimation we decided to extract human human points out of overall point cloud. As we can see from the Figure \ref{img:example-of-raw-data}, the raw point cloud contains not only human point cloud but also other objects which are located in the room, such as walls, cupboards, and other objects. These obstacles will not only harm the model's performance but will also greatly slow down the model's training and inference due to excess number of point.
 
 \begin{figure}[htbp]
-    \centerline{\includegraphics[scale=.4]{Figures/template.png}}
+    \centerline{
+        \includegraphics[trim=370 200 400 200,clip,scale=.25]{Figures/example-of-raw-data.png}
+    }
     \caption{Example of raw data from ITOP dataset (front view)}
     \label{img:example-of-raw-data}
 \end{figure}
@@ -48,7 +60,9 @@ After manual checks we came up to such parameters:
 An example of threshold filtered point cloud could be seen in Figure~\ref{img:after-threshold-filtering}.
 
 \begin{figure}[htbp]
-    \centerline{\includegraphics[scale=.4]{Figures/template.png}}
+    \centerline{
+            \includegraphics[trim=750 200 700 200,clip,scale=.35]{Figures/example-after-threshold.png}
+    }
     \caption{Example of point cloud after applying of threshold filter}
     \label{img:after-threshold-filtering}
 \end{figure}
@@ -81,8 +95,10 @@ $C_{human} = \underset{ x \in C }{\arg\max}$
 \end{algorithm}
 
 \begin{figure}[htbp]
-    \centerline{\includegraphics[scale=.4]{Figures/template.png}}
-    \caption{Example of point cloud after applying of threshold filter}
+    \centerline{
+            \includegraphics[trim=850 400 700 200,clip,scale=.3]{Figures/example-after-segmentation.png}
+    }
+    \caption{Example of point cloud after applying human extraction}
     \label{img:after-clustering}
 \end{figure}
 
@@ -138,9 +154,51 @@ An example of addition of the outlier noise to the point cloud could be seen in 
 
 \section{Network architecture}
 \label{Network architecture}
-\subsection{Capsule network autoencoder}
-\subsubsection{Chamfer distance}
-\subsection{Capsule-based regression network}
+
+In this section we will cover the network architecture for the task of human pose estimation, the loss functions, and the process of training.
+As a <<<backbone>>> the work of \cite{wu_3d_2020} was used.
+
+
+We designed a network based on the work of \cite{wu_3d_2020} to estimate the human pose. In this work we perform one-shot training strategy compared to the previous two-sage approaches. The aforementioned work perform two-stage training. The first stage consists of training of autoecoder part of the network to recreate the input human point cloud. Second stage takes autoencoder with freezed layers from the first stage and training a regression part of the modes which uses capsule outputs as input data. Such approach requires two steps in training pipeline and increase the number of huperparameter to tune the network. In this work we propose one-shot training scheme which is described in Section~\ref{network-training}.
+
+\begin{figure}[htbp]
+    \centerline{\includegraphics[scale=.125]{Figures/network architecture.png}}
+    \caption{Network architecture}
+    \label{img:network-architecture}
+\end{figure}
+
+% \subsection{Capsule network autoencoder}
+% \subsection{Capsule-based regression network}
+
+\subsection{Loss aggregation}
+In this work we propose one-stage training based on loss aggregation. 
+We will compare results of the training with both two-stage training scheme and simple "loss sum" aggregation strategy.
+For the encoder-decoder part of the network the Chamfer distance is used as a loss function. 
+The Chamfer distance is defined as:
+
+\begin{equation}
+d_{C D}\left(P_{1}, P_{2}\right)=\sum_{x \in P_{1}} \min _{y \in P_{2}}\|x-y\|_{2}^{2}+\sum_{y \in P_{2}} \min _{x \in P_{1}}\|x-y\|_{2}^{2}
+\label{eqn:chamfer-distance}
+\end{equation}
+
+Where $P_1 \in R^3$ and $P_2 \in R^3$ represent point clouds from the human point cloud and the point cloud recovered from latent capsules.
+
+
+The regression loss is defined as:
+
+\begin{equation}
+    \operatorname{Loss}_{E}(T, J)=\frac{1}{N} \sum_{i=1}^{N}\left(\left\|j_{i}-F\left(t_{i}\right)\right\|^{2}\right)+\lambda\|w\|^{2}
+\label{eqn:regression-loss}
+\end{equation}
+Where $T$ is a feature vector from latent capsules. $J$ is the ground truth human joints. And $F$ is the regression network.
+
+\subsubsection{Baseline: sum of losses}
+
+\subsubsection{TBD loss aggregation}
+
+
+
 
 \section{Network training}
+\label{network-training}
 
