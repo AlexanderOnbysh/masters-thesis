@@ -1,9 +1,17 @@
 \chapter{Related work}
-
 \label{Related work}
 
+In this chapter, we overview common approaches to solve problems with point clouds. We review common techniques, models, and algorithms for point clouds.
+
+In Section~\ref{Deep learning approaches for point cloud} and Section~\ref{Point-based Methods} we review common approaches on how to use point clouds in deep learning, along with preprocessing methods for 3D point data.
+
+In Section~\ref{Human pose estimation} we review models and techniques for the task of human pose estimation, both for 2D and 3D spaces.
+
+In Section~\ref{Capsule network} we review the initial work on the capsule network which were released for the task of image classification. Also, we review few works which adapt capsule networks for 3D point cloud data.
+
 \section{Deep learning approaches for point cloud}
-The different number of points and high dimensionality of the point cloud input makes it challenging to use regular 2D convolutions. The typical approach for such an issue is the conversation of the point cloud to a different format. Such approaches are projection-based methods, volumetric-based methods, and other geometric based methods.
+\label{Deep learning approaches for point cloud}
+The different number of points and high dimensionality of the point cloud input makes it challenging to use regular 2D convolutions. The typical approach for such an issue is the conversation of the point cloud to a different format. Such approaches are projection-based methods, volumetric-based methods, and other geometric-based methods.
 \subsection{Projection-based methods} take point cloud and project it into a different panel view. After the projection, each view provides a set of combined features for target classification, regression, or segmentation. The critical challenge for the projection-based algorithm is the multi-view feature aggregation into one global feature space.
 MVCNN \parencite{su_multi-view_2015} is the first model that presents a standard CNN architecture trained to recognize the shapes' rendered views independently of each other and show that a 3D shape can be recognized even from a single view at an appropriate accuracy. Recognition rates further increase when multiple views of the shapes are provided.
 MHBN \parencite{yu_multi-view_2018} (Multi-view Harmonized Bilinear Network) is the continuation of MVCNN. The approach proposes to integrates local convolutional features by harmonized bilinear pooling to produce a compact global descriptor.
@@ -16,15 +24,17 @@ The more advanced volumetric-based models use octrees data structure. OctNet \pa
 The next iteration of octrees representation of point cloud is proposed in O-CNN \parencite{wang_o-cnn_2017}. The model uses 3D convolutions to extract features from octrees. Built upon the octree representation of 3D shapes, the method takes the average normal vectors of a 3D model sampled in the finest leaf octants as input and performs 3D CNN operations on the octants occupied by the 3D shape surface.
 
 \section{Point-based Methods}
+\label{Point-based Methods}
 Compared with projection-based methods and volumetric-based methods that aggregate points from a spatial neighborhood, point-based methods attempt to learn features from individual points. Most of the recent work focuses on this direction.
 
-The first work which use point-based approach is PointNet \parencite{qi_pointnet_2017}. PointNet learns pointwise features independently with several MLP layers and extracts global features with a max-pooling layer. The input (an $n \times 3$ 2D tensor) is first multiplied by an affine transformation matrix predicted by a mini-network (T-Net) to hold invariance under geometric transformations. The point set is then passed through a group of MLPs followed by another joint alignment network, and a max-pooling layer to obtain the final global feature.
+The first work which uses a point-based approach is PointNet \parencite{qi_pointnet_2017}. PointNet learns pointwise features independently with several MLP layers and extracts global features with a max-pooling layer. The input (an $n \times 3$ 2D tensor) is first multiplied by an affine transformation matrix predicted by a mini-network (T-Net) to hold invariance under geometric transformations. The point set is then passed through a group of MLPs followed by another joint alignment network, and a max-pooling layer to obtain the final global feature.
 
-The second iteration of PointNet is PointNet++ \parencite{qi_pointnet_2017-1}. PointNet++ introduce a hierarchical neural network that applies PointNet recursively on a nested partitioning of the input point set. By exploiting metric space distances, network is able to learn local features with increasing contextual scales.
+The second iteration of PointNet is PointNet++ \parencite{qi_pointnet_2017-1}. PointNet++ introduces a hierarchical neural network that applies PointNet recursively on a nested partitioning of the input point set. By exploiting metric space distances, the network is able to learn local features with increasing contextual scales.
 
-The state of the art model for point-based classification is Point Attention Transformers \parencite{yang_modeling_2019}. The research for the first time propose an end-to-end learnable and taskagnostic sampling operation, named Gumbel Subset Sampling (GSS), to select a representative subset of input points. Equipped with Gumbel-Softmax, it produces a ”soft” continuous subset in training phase, and a ”hard” discrete subset in test phase. By selecting representative subsets in a hierarchical fashion, the networks learn a stronger representation of the input sets with lower computation cost.
+The state-of-the-art model for point-based classification is Point Attention Transformers \parencite{yang_modeling_2019}. The research for the first time proposes an end-to-end learnable and task agnostic sampling operation, named Gumbel Subset Sampling (GSS), to select a representative subset of input points. Equipped with Gumbel-Softmax, it produces a ”soft” continuous subset in the training phase, and a ”hard” discrete subset in the test phase. By selecting representative subsets in a hierarchical fashion, the networks learn a stronger representation of the input sets with lower computation cost.
 
 \section{Human pose estimation}
+\label{Human pose estimation}
 The latest research approaches in the field of human pose estimation are based on deep learning.
 There are two main approaches to the task:
 \begin{itemize}
@@ -35,31 +45,33 @@ There are two main approaches to the task:
 The latter approach is more recent and promising. The 3D perspective gives more information for the models about body position in the space. Also, 3D point clouds mitigate the issue with occluded parts of the body. 2D image is a 2D projection of 3D space, and this transformation leads to the loss of information.
 
 \subsection{Image-based methods}
-The approaches for 2D image human pose estimation are devided into two types:
+The approaches for 2D image human pose estimation are divided into two types:
 \begin{itemize}
   \item top-down approach
   \item bottom-up approach
 \end{itemize}
-In the top-down approach the first step is person detection and then pose regression. In bottom-up approach all body parts are detected first, and then grouped according to body's position.
+In the top-down approach, the first step is person detection and then pose regression. In the bottom-up approach, all body parts are detected first and then grouped according to the body's position.
 
-OpenPose \parencite{cao_openpose_2019} is the most popular example of bottom-up approaches for multi-person pose estimation. The network first extracts features from the image using VGG feature extractor. Then features are passed to two separate branches, first branch predicts body parts key points, second branch predict the associativity between body parts.
+OpenPose \parencite{cao_openpose_2019} is the most popular example of bottom-up approaches for multi-person pose estimation. The network first extracts features from the image using the VGG feature extractor. Then features are passed to two separate branches, the first branch predicts body parts key points, the second branch predicts the associativity between body parts.
 
-RMPE (AlphaPose) \parencite{fang_rmpe_2018} is a top-down model. This approach propose to use Symmetric Spatial Transformer Network (SSTN) to extract person regions based on bounding boxes. A Single Person Pose Estimator (SPPE) is used in this extracted region to estimate the human pose skeleton for that person. A Spatial De-Transformer Network (SDTN) is used to remap the estimated human pose back to the original image coordinate system. Finally, a parametric pose Non-Maximum Suppression (NMS) technique is used to handle the issue of redundant pose deductions.
+RMPE (AlphaPose) \parencite{fang_rmpe_2018} is a top-down model. This approach proposes to use Symmetric Spatial Transformer Network (SSTN) to extract person regions based on bounding boxes. A Single Person Pose Estimator (SPPE) is used in this extracted region to estimate the human pose skeleton for that person. A Spatial De-Transformer Network (SDTN) is used to remap the estimated human pose back to the original image coordinate system. Finally, a parametric pose Non-Maximum Suppression (NMS) technique is used to handle the issue of redundant pose deductions.
 
-\subsection{point-cloud-based methods}. Point cloud based estimation is relatively young field due to recent growth of popularity of point cloud scanning devices.
+\subsection{point-cloud-based methods}. Point cloud-based estimation is a relatively young field due to the recent growth of popularity of point cloud scanning devices.
 
-The first model for human pose estimation based on point cloud is \parencite{diaz_barros_real-time_2015}. The paper presents an approach where based on predefined human body skeleton the input point cloud is clustered using PCA and Expectation maximization algorithms.
+The first model for human pose estimation based on point cloud is \parencite{diaz_barros_real-time_2015}. The paper presents an approach where based on a predefined human body skeleton the input point cloud is clustered using PCA and Expectation maximization algorithms.
 
-The recent work in this field is presented in \parencite{zhou_learning_2020}. Paper propose a deep human pose network for 3D pose estimation by taking the point cloud data as input data to model the surface of complex human structures. This approach is end to end, first cast the 3D human pose estimation from 2D depth images to 3D point clouds and directly predict the 3D joint position.
+The recent work in this field is presented in \parencite{zhou_learning_2020}. Paper proposes a deep human pose network for 3D pose estimation by taking the point cloud data as input data to model the surface of complex human structures. This approach is end to end, first cast the 3D human pose estimation from 2D depth images to 3D point clouds and directly predict the 3D joint position.
 
-More point cloud human pose estimation methods will be covered in the next subsection. Next subsection covers models which are based on capsule architecture.
+More point cloud human pose estimation methods will be covered in the next subsection. The next subsection covers models which are based on capsule architecture.
 
 \section{Capsule network}
+\label{Capsule network}
 The concept of the capsule was first proposed by Hinton \parencite{sabour_dynamic_2017} and has been widely used in 2D and 3D deep learning \parencite{kakillioglu_3d_2020, qin_detecting_2020, duarte_videocapsulenet_2018, lalonde_capsules_2018}.
 
-Capsules represents as a set of vectors. The length of the capsule's vector represents the probability of the object's presence. Direction of the vector describes object's property e.g. position, viewpoint, size, shape, etc. For capsules' training Hinton propose a new algorithm \parencite{sabour_dynamic_2017} called dynamic routing. The forward pass with dynamic routing propagate the input data from lower level capsules to higher level ones. Lower level capsules pass learned and predicted data to the higher level capsules. If multiple lower-level capsules agrees (activated) then higher-level capsules activates accordingly. With each iteration of dynamic routing each capsules gets more accurate.
+Capsules are represented as a set of vectors. The length of the capsule's vector represents the probability of the object's presence. The direction of the vector describes the object's property e.g. position, viewpoint, size, shape, etc. For capsules' training Hinton proposes a new algorithm \parencite{sabour_dynamic_2017} called dynamic routing. The forward pass with dynamic routing propagates the input data from lower-level capsules to higher-level ones. Lower-level capsules pass learned and predicted data to the higher-level capsules. If multiple lower-level capsules agree (activated) then higher-level capsules activate accordingly. With each iteration of dynamic routing, each capsule gets more accurate.
 
-\subsection{Capsule networks for point cloud classification}. The first work where capsule networks were applied to the problem of point cloud classification is 3DCapsNet \parencite{cheraghian_3dcapsule_2018}. In this work a new capsule-based layer is proposed - ComposeCaps. ComposeCaps learns spatially relevant feature mapping that can be exploited for 3D point cloud classification.
-The second iteration of capsule applicability to 3D classification is 3D point capsule network \parencite{zhao_3d_2019}. 3D point capsule network is an auto-encoder designed based on capsule networks. In this work researchers propose new architecture with capsule network encoder which encode input point cloud to capsules' latent space, and decoder which decode latent capsules. The proposed architecture works for several common point cloud-related tasks, such as object classification, object reconstruction and part segmentation.
+\subsection{Capsule networks for point cloud classification}. The first work where capsule networks were applied to the problem of point cloud classification is 3DCapsNet \parencite{cheraghian_3dcapsule_2018}. In this work, a new capsule-based layer is proposed - ComposeCaps. ComposeCaps learns spatially relevant feature mapping that can be exploited for 3D point cloud classification.
+The second iteration of capsule applicability to 3D classification is the 3D point capsule network \parencite{zhao_3d_2019}. 3D point capsule network is an auto-encoder designed based on capsule networks. In this work researchers propose new architecture with a capsule network encoder that encodes input point cloud to capsules' latent space, and a decoder that decodes latent capsules. The proposed architecture works for several common point cloud-related tasks, such as object classification, object reconstruction, and part segmentation.
 
-\subsection{Capsule networks for point cloud regression.} The only work which is currently presented on the topic of point cloud regression is Capsule-HandsNet \parencite{wu_3d_2020}. This project is inspired by this research. Capsule-HandsNet proposes an end-to-end capsule-based hand pose estimation network, which processes hand point clouds directly with the consideration of structural relationships among local parts, including symmetry, junction, relative location, etc.The model works in autoencoder maner the same as in \parencite{zhao_3d_2019}.
+\subsection{Capsule networks for point cloud regression} 
+The only work which is currently presented on the topic of point cloud regression is Capsule-HandsNet \parencite{wu_3d_2020}. This project is inspired by this research. Capsule-HandsNet proposes an end-to-end capsule-based hand pose estimation network, which processes hand point clouds directly with the consideration of structural relationships among local parts, including symmetry, junction, relative location, etc.The model works in autoencoder maner the same as in \parencite{zhao_3d_2019}.

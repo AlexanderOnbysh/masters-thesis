@@ -28,26 +28,27 @@ Using recent ML algorithms such as deep learning on 3D point cloud results in ma
 
 \section{Motivation}
 Human pose estimation is an important task that is used in different fields.
-A recent class of deep learning architecture known as capsule networks \cite{sabour_dynamic_2017} theoretically overcomes multiple conventional deep learning models for human pose estimation. Compared to CNNs, capsule networks, due to the dynamic routing algorithm, account for the spatial relation between the input scene parts. Additionally, capsule networks "learn" the object's geometric relationship and thus could be viewpoint agnostic \cite{sabour_dynamic_2017}. These capsule networks' properties make them the right candidate for examining human pose estimators based on the point cloud.
-Moreover, some experiments stated that capsule networks need less data for convergence compared to non-capsule models. Besides, due to latent space inside the capsule network, it is more noise agnostic than regular convolutional networks.
+A recent class of deep learning architecture known as capsule networks \parencite{sabour_dynamic_2017} theoretically overcomes multiple conventional deep learning models for human pose estimation. Compared to CNNs, capsule networks, due to the dynamic routing algorithm, account for the spatial relation between the input scene parts. Additionally, capsule networks "learn" the object's geometric relationship and thus could be viewpoint agnostic \parencite{sabour_dynamic_2017}. These capsule networks' properties make them the right candidate for examining human pose estimators based on the point cloud.
+Moreover, some experiments \parencite{wang_capsule_2020,gritsevskiy_capsule_2018} stated that capsule networks need less data for convergence compared to non-capsule models. Besides, due to latent space inside the capsule network, it is more noise agnostic than regular convolutional networks.
 
 \section{Research Gap}
 \begin{itemize}
   \item There is no capsule-based model for 3D human pose estimation task.
-  \item Compare the influence of noisy data on capsule-based and non-capsule-based models.
-  \item Compare convergence of capsule-based and non-capsule based models with the truncated training dataset.
+  \item There is no comparison of the influence of noisy data on capsule-based and non-capsule-based models for 3D space.
+  \item There is no comparison of how well capsule-based works with limited dataset compared to regular models.
 \end{itemize}
 
 \section{Objective}
-The work's objective is to propose a model based on a capsule network for a 3D point cloud human pose estimation. Evaluate the model on public benchmark datasets for human pose estimation. Compare results with state of the art approaches for the task as mentioned earlier. Evaluate the influence of the noise in training dataset on capsule-based and non-capsule-based networks. Measure the convergence speed of the models with different sizes of training dataset.
+The work's objective is to propose a model based on a capsule network for a 3D point cloud human pose estimation. Evaluate the model on public benchmark dataset for human pose estimation. Compare results with state of the art approaches for the task as mentioned earlier. Evaluate the influence of the noise in training dataset on capsule-based and non-capsule-based networks. Measure the performance of the models with different sizes of training dataset.
 
 \section{Paper structure}
-Section \ref{releated work} covers the related work of human pose estimation based on both 2D images and 3D point clouds. This section described conventionally, and state of the art approaches for solving the issue. Reviews capsule networks for different 3D point cloud tasks like point classification, segmentation, and position estimation.
+Section \ref{Related work} covers the related work of human pose estimation based on both 2D images and 3D point clouds. This section described conventionally, and state of the art approaches for solving the issue. Reviews capsule networks for different 3D point cloud tasks like point classification, segmentation, and position estimation.
 
 The rest of the paper is organized in the following manner:
-% TODO: fill with sections
 \begin{itemize}
-  \item Section \ref{hypothesis} presents the project's hypothesis and problems;
-  \item  section \ref{approach} describes the approach for solving the project's objection and provide timelines;
-  \item  section \ref{conclusion} sums up the paper's ideas and present brief conclusions and possible future work in this field.
+  \item Section \ref{Hypothesis} presents the project's hypothesis and problems;
+    \item  section \ref{Dataset} describes the dataset which is used for training and evaluation along with evaluation metrics;
+  \item  section \ref{Methodology} describes the approach for solving the project's objectives;
+   \item  section \ref{Experiments} describes experiments on project's objections described in \ref{Methodology};
+  \item  section \ref{Conclusions} sums up the paper's ideas and present brief conclusions and possible future work in this field.
 \end{itemize}

@@ -1,13 +1,14 @@
 \chapter{Research Hypothesis and Problem}
-
 \label{Hypothesis}
 
 \section{Hypotheses}
-\paragraph{Model Comparison hypothesis:} This project's main objective is to create a model for human pose estimation based on point cloud using a capsule-based neural network, which shows competitive accuracy on well-known benchmarks.
+\paragraph{Model Comparison hypothesis:} This project's main objective is to create a model for human pose estimation based on point cloud using a capsule-based neural network, which shows competitive performance on well-known benchmarks.
 
-\paragraph{Noise resistance hypothesis:} the impact of noise in the training dataset on the capsule-based model should be less compared to non-capsule models. Hypothesis is made based on 2D image recognition based using capsule networks \cite{sabour_dynamic_2017}.
-Dataset size hypothesis: The dataset's size for full convergence should be smaller for capsule-based network compared to non-capsule ones. Assumption is made based on experiments presented in \cite{sabour_dynamic_2017} based on 2D image classification.
+\paragraph{Noise resistance hypothesis:} The impact of noise in the training dataset on the capsule-based model should be less compared to non-capsule-based models. A hypothesis is made based on 2D image recognition using capsule networks \cite{sabour_dynamic_2017,}.
+
+\paragraph{Dataset size hypothesis:} The dataset's size for compatible results should be smaller for capsule-based networks compared to non-capsule ones. The assumption is made based on experiments presented is \cite{sabour_dynamic_2017,wang_capsule_2020,gritsevskiy_capsule_2018} based on 2D image classification.
 
 \section{Problems}
-\paragraph{Noise problem.} To achieve the project goal mentioned above, we need to create an algorithm that could create realistic noise for point cloud data. We need to analyze and replicate factors that influence scanning devices' accuracy and result in noisy data.
-\paragraph{Models' retrain problem.} To achieve the project's third goal, we need to retrain reference sota models with truncated training data. Hence, we need to allocate additional time for such an activity.
+\paragraph{Noise problem.} To achieve the project goal mentioned above, we need to generate realistic noise for point cloud data. We need to compare how noisy data influence capsule-based and not capsule-based models. 
+
+\paragraph{Models' retrain problem.} To achieve the project's third goal, we need to retrain the reference SOTA \footnote{stage of the art} model with truncated training data. After this compare retrained model with the reference capsule-based model.
