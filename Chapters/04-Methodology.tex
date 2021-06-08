@@ -257,7 +257,7 @@ In this section, we describe the method of training the model in one stage manne
 
 The work \cite{wu_3d_2020} proposes to split the training phase into two steps: the auto-encoder training phase and the regression training phase.
 
-In the first phase regression network is frozen (Figure~\ref{Network architecture}) and PointNet, convolution layers, capsule layers, and decoder are trained. 
+In the first phase regression network is frozen (Figure~\ref{img:network-architecture}) and PointNet, convolution layers, capsule layers, and decoder are trained. 
 
 In the second phase, \cite{wu_3d_2020} propose taking the trained auto-encoder part from the previous step, freeze, and train only the regression part.
 
@@ -283,7 +283,7 @@ The assumption we try to test is that a capsule-based network should perform bet
     \label{img:denoising}
 \end{figure}
 
-To test the above assumption we use a capsule-based model which was trained on the dataset without noise and evaluate it on an evaluation set with a different amount of uniform and Gaussian noise. Also, we use the pre-trained PostNet model as a reference.
+To test the above assumption we use a capsule-based model which was trained on the dataset without noise and evaluate it on an evaluation set with a different amount of uniform and Gaussian noise. Also, we use the pre-trained PointNet model as a reference.
 We will measure the absolute drop of mAP (described in Formula~\ref{eqn:dataset-metric-map}) with each increase of the noise amount.
 
 \section{Influence of dataset size on model's performance}
