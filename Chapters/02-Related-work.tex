@@ -23,6 +23,7 @@ MVCNN \parencite{su_multi-view_2015} is the first CNN-based architecture which r
     \label{img:mvcnn}
 \end{figure}
 
+
 MHBN \parencite{yu_multi-view_2018} (Multi-view Harmonized Bilinear Network) is the continuation of MVCNN. The approach proposes to integrates local convolutional features by harmonized bilinear pooling to produce a compact global descriptor.
 To persist the information from different views, the View-GCN \parencite{wei_view-gcn_2020} proposes constructing view-graph with multiple views as graph nodes, then designing a graph convolutional neural network over view-graph to learn discriminative shape descriptor hierarchically.
 All projection-based methods struggle from high memory consumption and high computational complexity since, for one feature extraction, the model should be run for the number of different views.
@@ -59,6 +60,7 @@ The first work which uses a point-based approach is PointNet \parencite{qi_point
     \label{img:pointnet}
 \end{figure}
 
+
 The second iteration of PointNet is PointNet++ \parencite{qi_pointnet_2017-1}. PointNet++ introduces a hierarchical neural network that applies PointNet recursively on a nested partitioning of the input point set. Using metric space distance, the model could learn local features with increasing contextual scale.
 The state-of-the-art model for point-based classification is Point Attention Transformers \parencite{yang_modeling_2019}. The research for the first time proposes the mechanism of sampling which is end-to-end and task agnostic. The sampling is named "Gumbel Subset Sampling" - GSS. This sampling is used to select the most representative subset of the point cloud from the initial data. Using Gumble-Softmax, the model could provide a continuous point subset in the training phase, and a strict discrete subset in the test phase. Using such an approach the model is able to learn a more robust representation of the input data with less computational complexity.
 
@@ -88,6 +90,7 @@ OpenPose \parencite{cao_openpose_2019} is the most popular example of bottom-up 
     \caption{An example OpenPose network result  \parencite{cao_openpose_2019}}
     \label{img:openpose}
 \end{figure}
+
 
 RMPE (AlphaPose) \parencite{fang_rmpe_2018} is a top-down model.
 This approach proposes to use a four-stage pipeline. The first step is Symmetric Spatial Transformer Network (SSTN). In this step, the model extracts the human region using a bounding box. The second step is a Single Person Pose Estimator (SPPE). This step model uses extracted human regions to estimate key joints of the human body. The third step is spatial De-Transformer Network (SDTN). This step remap estimated human joint coordinates back to the original coordinate system. The last step is parametric pose Non-Maximum Suppression (NMS). This step handles the issue with redundant pose deductions.
