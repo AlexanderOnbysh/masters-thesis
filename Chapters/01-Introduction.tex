@@ -28,8 +28,9 @@ Using recent ML algorithms such as deep learning on 3D point cloud results in ma
 
 \section{Motivation}
 Human pose estimation is an important task that is used in different fields.
-A recent class of deep learning architecture known as capsule networks \parencite{sabour_dynamic_2017} theoretically overcomes multiple conventional deep learning models for human pose estimation. Compared to CNNs, capsule networks, due to the dynamic routing algorithm, account for the spatial relation between the input scene parts. Additionally, capsule networks "learn" the object's geometric relationship and thus could be viewpoint agnostic \parencite{sabour_dynamic_2017}. These capsule networks' properties make them the right candidate for examining human pose estimators based on the point cloud.
-Moreover, some experiments \parencite{wang_capsule_2020,gritsevskiy_capsule_2018} stated that capsule networks need less data for convergence compared to non-capsule models. Besides, due to latent space inside the capsule network, it is more noise agnostic than regular convolutional networks.
+A lot of research work was done to solve the task of human pose estimation using point clouds. These works made significant progress in the regression task and showed good performance on public datasets. However, most methods use the end-to-end approach of learning, paying less attention to the inner structure of point cloud objects. The mutual relationship between an object's parts (in our case human body) plays a crucial role during the regression. 
+The recent works \parencite{cheraghian_3dcapsule_2018,wu_3d_2020} which use capsule-based methods for point clouds, show that these types of models could consider object's part relationships. Moreover, auto-encoder capsule-based networks could learn objects' properties in unsupervised manner \parecite{wu_3d_2020}. These properties of capsule networks look promising for tasks where viewpoint invariance is a substantial challenge.
+Moreover, some experiments \parencite{wang_capsule_2020,gritsevskiy_capsule_2018} stated that capsule networks need less data for convergence compared to non-capsule models. Besides, it is more noise agnostic than regular convolutional networks due to latent space inside the capsule network.
 
 \section{Research Gap}
 \begin{itemize}
